@@ -1,3 +1,12 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+# Example usage
+xrpl_endpoint = os.getenv("XRPL_ENDPOINT")
+currency = os.getenv("DEFAULT_CURRENCY", "USD")
+
 from fastapi import FastAPI
 from services.xrpl_fetcher import get_wallet_tokens
 from services.nft_fetcher import get_wallet_nfts
