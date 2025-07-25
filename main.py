@@ -1,13 +1,6 @@
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-# Example usage
-xrpl_endpoint = os.getenv("XRPL_ENDPOINT")
-currency = os.getenv("DEFAULT_CURRENCY", "USD")
-
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from services.xrpl_fetcher import get_wallet_tokens
 from services.nft_fetcher import get_wallet_nfts
 from services.price_fetcher import get_token_price
@@ -15,6 +8,15 @@ from services.fx_converter import convert_currency
 from services.pnl_calculator import calculate_pnl
 
 app = FastAPI()
+
+# 👇 Add this block right after app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # ⚠️ You can lock this down later to your Vercel URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/wallet/{address}")
 def fetch_wallet(address: str):
