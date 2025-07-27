@@ -9,6 +9,16 @@ from services.pnl_calculator import calculate_pnl
 
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can change "*" to just your Vercel URL for stricter security
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # 👇 Add this block right after app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
